@@ -25,10 +25,20 @@ export class PorPaisComponent implements OnInit {
 
       this.paises = paises;
 
+
+
+
     }, (error) => {
       this.hayError = true;
       this.paises = []
     });
+
+
   }
 
+  sugerencias(termino: string) {
+  //console.log(termino)
+  this.hayError = false;
 }
+}
+
