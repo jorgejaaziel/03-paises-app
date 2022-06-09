@@ -10,8 +10,10 @@ import { Country } from '../../interfaces/pais.interface';
 export class PorPaisComponent implements OnInit {
 
   paises: Country[] = []
+  paisesSugeridos: Country[] = []
   termino: string = '';
   hayError: boolean = false;
+  mostrarSugerencias: boolean = false;
 
   constructor( private paisService: PaisService) { }
 
@@ -19,26 +21,38 @@ export class PorPaisComponent implements OnInit {
 
   buscar(termino: string) {
     this.hayError=false;
+    this.mostrarSugerencias = false;
     this.termino=termino;
     console.log(this.termino)
     this.paisService.buscarPais(this.termino).subscribe( paises => {
 
       this.paises = paises;
 
-
-
-
     }, (error) => {
       this.hayError = true;
       this.paises = []
     });
-
-
   }
 
   sugerencias(termino: string) {
-  //console.log(termino)
   this.hayError = false;
+  this.mostrarSugerencias = true;
+  this.termino = termino;
+  this.paisService.buscarPais(this.termino).subscribe(paises => {
+    this.paisesSugeridos = paises;
+    console.log(paises);
+  }, (error)=>{
+    this.hayError=true;
+    this.paisesSugeridos=[]
+  })
+
+
 }
+
+buscarSugerido(termino: string) {
+  this.buscar(termino)
 }
+
+}
+
 
